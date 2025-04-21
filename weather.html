@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🌱 Smart Farm Assistant</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+    body {
+      margin: 0;
+      padding: 40px 20px;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(120deg, #2c3e50, #3498db);
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 30px;
+      flex-wrap: wrap;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 20px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+      padding: 25px 20px;
+      width: 320px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      text-align: center;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 14px 35px rgba(0,0,0,0.25);
+    }
+
+    .card h2 {
+      color: #2c3e50;
+      margin: 15px 0 10px;
+      font-weight: 600;
+      font-size: 1.4em;
+    }
+
+    .icon {
+      width: 100px;
+      height: 100px;
+      margin: 10px 0;
+    }
+
+    .data {
+      color: #34495e;
+      font-size: 1.05em;
+      line-height: 1.5;
+      margin: 10px 0;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+  </style>
+</head>
+<body>
+
+<div class="card">
+  <h2>🌦️ Weather Report</h2>
+  <img id="weatherIcon" class="icon" src="" alt="Weather Icon">
+  <p id="weatherData" class="data">Fetching weather...</p>
+</div>
+
+<div class="card">
+  <a href="iregation.html">
+    <h2>💧 Irrigation Advice</h2>
+    <img id="adviceIcon" class="icon" src="" alt="Advice Icon">
+    <p id="irrigationAdvice" class="data">Waiting for weather info...</p>
+  </a>
+</div>
+
+<script>
+  async function fetchWeather(lat, lon) {
+    const apiKey = "c37a11513d77ebb07fcc2fe9840ab38c"; 
+    const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${apiKey}`;
+    const response = await fetch(url);
+    if (!response.ok) throw new Error("Failed to fetch weather.");
+    return response.json();
+  }
+
+  function getIrrigationAdvice(weather) {
+    const temp = weather.main.temp;
+    const humidity = weather.main.humidity;
+    const rain = weather.rain ? weather.rain["1h"] || 0 : 0;
+
+    if (rain > 1) {
+      document.getElementById('adviceIcon').src = "https://cdn-icons-png.flaticon.com/512/1163/1163624.png";
+      return "🌧️ Rainfall detected — irrigation not needed.";
+    } else if (temp > 30 && humidity < 40) {
+      document.getElementById('adviceIcon').src = "https://cdn-icons-png.flaticon.com/512/4150/4150962.png";
+      return "🔥 Hot & dry — increase watering frequency!";
+    } else {
+      document.getElementById('adviceIcon').src = "https://cdn-icons-png.flaticon.com/512/4150/4150915.png";
+      return "✅ Normal weather — light irrigation recommended.";
+    }
+  }
+
+  if ("geolocation" in navigator) {
+    navigator.geolocation.getCurrentPosition(async (position) => {
+      const lat = position.coords.latitude;
+      const lon = position.coords.longitude;
+
+      try {
+        const weather = await fetchWeather(lat, lon);
+        const iconCode = weather.weather[0].icon;
+        const iconUrl = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
+
+        document.getElementById('weatherIcon').src = iconUrl;
+        document.getElementById('weatherData').innerHTML = 
+          `📍 Lat: ${lat.toFixed(2)}, Lon: ${lon.toFixed(2)}<br>` +
+          `🌡️ Temp: ${weather.main.temp}°C<br>` +
+          `💧 Humidity: ${weather.main.humidity}%<br>` +
+          `🌧️ Rain: ${weather.rain ? JSON.stringify(weather.rain) : "No rain"}`;
+
+        document.getElementById('irrigationAdvice').textContent = getIrrigationAdvice(weather);
+
+      } catch (err) {
+        document.getElementById('weatherData').textContent = "❌ Unable to fetch weather data.";
+        document.getElementById('irrigationAdvice').textContent = "⚠️ Irrigation advice unavailable.";
+      }
+    }, () => {
+      document.getElementById('weatherData').textContent = "⚠️ Location access denied.";
+      document.getElementById('irrigationAdvice').textContent = "⚠️ Cannot provide irrigation advice.";
+    });
+  } else {
+    document.getElementById('weatherData').textContent = "❌ Geolocation not supported.";
+  }
+</script>
+
+</body>
+</html>
