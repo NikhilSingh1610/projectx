@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kisan Sahayak</title>
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #121212;
+      color: #E0E0E0;
+    }
+
+    .navbar {
+      width: 85%;
+      position: fixed;
+      top: 0;
+      margin-top: 3px;
+      border-radius: 10px;
+      backdrop-filter: blur(7px);
+      -webkit-backdrop-filter: blur(7px);
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 50px;
+      margin-left: 7.5%;
+      z-index: 10;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: 700;
+      color: #BB86FC;
+      margin-left: 10px;
+    }
+
+    .logo-image {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 2px solid #fff;
+    }
+
+    .navbar ul {
+      display: flex;
+      list-style: none;
+    }
+
+    .navbar ul li {
+      margin-left: 20px;
+    }
+
+    .navbar ul li a {
+      color: #E0E0E0;
+      text-decoration: none;
+      font-size: 16px;
+    }
+
+    .navbar ul li a:hover {
+      color: #ffffff;
+      background: #7373788a;
+      border-radius: 8px;
+      padding: 5px 10px;
+    }
+
+    section {
+      padding: 120px 20px 60px;
+    }
+
+    .section-heading {
+      text-align: center;
+      font-size: 28px;
+      color: #BB86FC;
+      margin-bottom: 15px;
+    }
+
+    .section-description {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto 40px;
+      font-size: 16px;
+      color: #ccc;
+      background-color: #1e1e1e;
+      padding: 15px 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(187, 134, 252, 0.2);
+    }
+
+    .health-cards {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 25px;
+    }
+
+    .flip-card {
+      background-color: transparent;
+      width: 300px;
+      height: 250px;
+      perspective: 1000px;
+    }
+
+    .flip-card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      transition: transform 0.8s;
+      transform-style: preserve-3d;
+    }
+
+    .flip-card:hover .flip-card-inner {
+      transform: rotateY(180deg);
+    }
+
+    .flip-card-front, .flip-card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .flip-card-front {
+      background-color: #1e1e1e;
+      color: #BB86FC;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .flip-card-back {
+      background-color: #ffffff;
+      color: #000;
+      transform: rotateY(180deg);
+      overflow-y: auto;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    footer {
+      background: #121212;
+      color: #E0E0E0;
+      text-align: center;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    footer a {
+      color: #BB86FC;
+      margin-left: 10px;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    .left, .right {
+      padding: 10px;
+    }
+
+    @media (max-width: 600px) {
+      .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 10px;
+      }
+      .navbar ul {
+        flex-direction: column;
+        margin-top: 10px;
+      }
+      .navbar ul li {
+        margin: 5px 0;
+      }
+      .flip-card {
+        width: 90%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="logo-container">
+      <img src="/content/arogya.jpg" alt="Logo" class="logo-image">
+      <div class="logo">Kisan Sahayak</div>
+    </div>
+    <ul>
+      <li><a href="/home">Home</a></li>
+      <li><a href="/book">Appointments</a></li>
+      <li><a href="/logout">Logout</a></li>
+    </ul>
+  </nav>
+
+  <!-- Services Section -->
+  <section id="services">
+    <div class="services-container">
+      <h2 class="section-heading">👨‍🌾 Farmer’s Health Challenges</h2>
+      <p class="section-description">
+        Farming is a noble yet physically and mentally demanding occupation. Many farmers silently suffer from health problems due to harsh environmental exposure and limited access to healthcare. Hover over the cards below to learn more about their challenges.
+      </p>
+
+      <div class="health-cards">
+        <div class="flip-card">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">☀️ Skin Disorders from Sun Exposure</div>
+            <div class="flip-card-back">
+              <p>Constant UV exposure causes sunburns, rashes, and even skin cancer. Farmers often lack awareness or resources for sun protection like sunscreen or proper clothing.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flip-card">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">🌫️ Respiratory Issues from Dust & Pesticides</div>
+            <div class="flip-card-back">
+              <p>Inhalation of pesticide fumes and dust leads to asthma, bronchitis, or lung infections. Lack of masks or safety equipment worsens the risk.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flip-card">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">💪 Musculoskeletal Problems</div>
+            <div class="flip-card-back">
+              <p>Repetitive hard labor causes joint pain, arthritis, and back issues. Most farmers delay treatment due to poor medical access.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flip-card">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">🧠 Mental Health Struggles</div>
+            <div class="flip-card-back">
+              <p>Financial stress, crop failure, and isolation cause depression and anxiety. Mental health is rarely discussed or treated in rural areas.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flip-card">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">🚱 Waterborne Diseases</div>
+            <div class="flip-card-back">
+              <p>Contaminated water causes cholera, diarrhea, and infections. Lack of sanitation facilities spreads illness quickly in farming communities.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flip-card">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">☣️ Exposure to Hazardous Chemicals</div>
+            <div class="flip-card-back">
+              <p>Handling fertilizers and pesticides without protection leads to cancer, nerve damage, and skin irritation. Safe handling practices are often ignored.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="left">
+      <p>&copy; 2025 Kisan Sahayak. All Rights Reserved.</p>
+    </div>
+    <div class="right">
+      <a href="#privacy-policy">Privacy Policy</a>
+      <a href="#terms-conditions">Terms & Conditions</a>
+      <a href="#cookie-policy">Cookie Policy</a>
+    </div>
+  </footer>
+
+  <!-- JavaScript for scroll animations -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const cards = document.querySelectorAll('.service-card');
+      const observer = new IntersectionObserver(
+        entries => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.3 }
+      );
+      cards.forEach(card => observer.observe(card));
+    });
+  </script>
+
+  <!-- Botpress Chatbot -->
+  <script src="https://cdn.botpress.cloud/webchat/v2.2/inject.js"></script>
+  <script src="https://files.bpcontent.cloud/2025/01/31/00/20250131004409-XDSRXKE8.js"></script>
+</body>
+</html>
